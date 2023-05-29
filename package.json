@@ -6,16 +6,28 @@
   "repository": "git@github.com:dbpunk-labs/bridge-ui.git",
   "author": "imotai <codego.me@gmail.com>",
   "license": "MIT",
+  "devDependencies": {
+    "@protobuf-ts/plugin": "^2.8.2",
+    "@protobuf-ts/protoc": "^2.8.2",
+    "prettier": "^2.8.1"
+  },
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@mui/icons-material": "^5.11.16",
     "@mui/material": "latest",
+    "@protobuf-ts/grpcweb-transport": "^2.8.2",
+    "@protobuf-ts/runtime": "^2.8.2",
+    "@protobuf-ts/runtime-rpc": "^2.8.2",
+    "@rainbow-me/rainbowkit": "^1.0.1",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "viem": "^0.3.37",
+    "wagmi": "^1.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
