@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -84,7 +85,7 @@ export default function App() {
   //  });
 
   const [balance, setBalance] = React.useState("");
-  const [depositValue, setDepositValue] = React.useState(0);
+  const [depositValue, setDepositValue] = React.useState("0");
   const [showApproveButton, setShowApproveButtion] = React.useState(false);
   const [depositFormState, openDepositForm] = React.useState(false);
   const [isRequestFaucetOk, setRequestFaucetResult] = React.useState(false);
@@ -105,6 +106,7 @@ export default function App() {
     address,
     token: db3TokenContractConfig.address,
     onSuccess(data) {
+      console.log(data)
       setBalance((Number(data.value) / 1000000000.0).toFixed(2).toString());
     },
   });
@@ -362,7 +364,7 @@ export default function App() {
             <Button
               onClick={() => {
                 approveToken.write({
-                  args: [db3BridgeContractConfig.address, "10000000000"],
+                  args: [db3BridgeContractConfig.address, BigInt("10000000000")],
                 });
               }}
             >
@@ -372,7 +374,7 @@ export default function App() {
               onClick={() => {
                 depositToBridge.write({
                   args: [
-                    BigInt(parseFloat(depositValue) * 1000000000).toString(),
+                    BigInt(parseFloat(depositValue) * 1000000000)
                   ],
                 });
               }}

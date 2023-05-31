@@ -21,36 +21,6 @@ export const db3BridgeContractConfig = {
     {
       inputs: [
         {
-          internalType: "contract Db3Token",
-          name: "tokenContract",
-          type: "address",
-        },
-      ],
-      stateMutability: "nonpayable",
-      type: "constructor",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: false,
-          internalType: "address",
-          name: "_from",
-          type: "address",
-        },
-        {
-          indexed: false,
-          internalType: "uint256",
-          name: "amount",
-          type: "uint256",
-        },
-      ],
-      name: "Deposit",
-      type: "event",
-    },
-    {
-      inputs: [
-        {
           internalType: "uint256",
           name: "amount",
           type: "uint256",
@@ -66,25 +36,6 @@ export const db3BridgeContractConfig = {
       ],
       stateMutability: "payable",
       type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "address",
-          name: "owner",
-          type: "address",
-        },
-      ],
-      name: "getLockedBalance",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
+    }
   ],
 } as const;
