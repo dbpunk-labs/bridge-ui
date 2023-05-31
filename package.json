@@ -9,12 +9,14 @@
   "devDependencies": {
     "@protobuf-ts/plugin": "^2.8.2",
     "@protobuf-ts/protoc": "^2.8.2",
-    "prettier": "^2.8.1"
+    "prettier": "^2.8.1",
+    "typescript": "latest"
   },
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
     "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.132",
     "@mui/material": "latest",
     "@protobuf-ts/grpcweb-transport": "^2.8.2",
     "@protobuf-ts/runtime": "^2.8.2",
@@ -25,9 +27,9 @@
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
-    "typescript": "latest",
-    "viem": "^0.3.37",
-    "wagmi": "^1.0.8"
+    "react-use": "^17.4.0",
+    "viem": "^0.3.40",
+    "wagmi": "^1.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
