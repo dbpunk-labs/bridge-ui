@@ -38,6 +38,11 @@ import { Buffer } from "buffer";
 import { useAsyncFn } from "react-use";
 import { useBalance } from "wagmi";
 import { useAccount } from "wagmi";
+import { useContractRead } from "wagmi";
+import { useContractWrite } from "wagmi";
+import { db3BridgeContractConfig } from "./db3_rollup_abi";
+import { db3TokenContractConfig } from "./db3_token_abi";
+
 globalThis.Buffer = Buffer;
 const faucet = new FaucetProvider("http://127.0.0.1:26649", window);
 
@@ -62,7 +67,25 @@ function Copyright(props: any) {
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function Pricing() {
+export default function App() {
+  //  const [context, setContext] = React.useState({
+  //      address:"",
+  //      showApproveButton: false,
+  //      depositFormState: false,
+  //      isRequestFaucetOk: false,
+  //      requestFaucetErr: {
+  //          isErr:false,
+  //          err: ""
+  //      },
+  //      faucetLoading: false,
+  //      totalAmount: "0",
+  //      totalAddress: "0",
+  //      balance: "0"
+  //  });
+
+  const [balance, setBalance] = React.useState("");
+  const [depositValue, setDepositValue] = React.useState(0);
+  const [showApproveButton, setShowApproveButtion] = React.useState(false);
   const [depositFormState, openDepositForm] = React.useState(false);
   const [isRequestFaucetOk, setRequestFaucetResult] = React.useState(false);
   const [requestFaucetErr, setRequestFaucetErr] = React.useState({
@@ -75,11 +98,33 @@ export default function Pricing() {
     totalAmount: "0",
     totalAddress: "0",
   });
+
   const { address, isConnecting, isDisconnected } = useAccount();
-  const { data, isError, isLoading } = useBalance({
+
+  const fetchBalance = useBalance({
     address,
-    token: "0x7b68E10c80474DD93bD8C1ad53D4463c60a3AB7c",
+    token: db3TokenContractConfig.address,
+    onSuccess(data) {
+      setBalance((Number(data.value) / 1000000000.0).toFixed(2).toString());
+    },
   });
+
+  const allowanceData = useContractRead({
+    ...db3TokenContractConfig,
+    functionName: "allowance",
+    args: [address!, db3BridgeContractConfig.address],
+  });
+
+  const depositToBridge = useContractWrite({
+    ...db3BridgeContractConfig,
+    functionName: "deposit",
+  });
+
+  const approveToken = useContractWrite({
+    ...db3TokenContractConfig,
+    functionName: "approve",
+  });
+
   const [_state, requestFaucetState] = useAsyncFn(async () => {
     const response = await faucet.getState();
     setFaucetState({
@@ -116,8 +161,11 @@ export default function Pricing() {
 
   if (!inited) {
     requestFaucetState();
+    console.log(allowanceData);
     setInited(true);
-    console.log(data);
+    if (allowanceData.data && allowanceData.data <= 0) {
+      setShowApproveButtion(true);
+    }
   }
 
   return (
@@ -299,30 +347,37 @@ export default function Pricing() {
             </DialogContentText>
             <FormControl fullWidth sx={{ m: 1 }} variant="standard">
               <InputLabel htmlFor="standard-adornment-amount">
-                Amount
+                Balance:{balance} DB3
               </InputLabel>
               <Input
                 id="standard-adornment-amount"
                 startAdornment={
                   <InputAdornment position="start">DB3</InputAdornment>
                 }
+                onChange={(e) => setDepositValue(e.currentTarget.value)}
               />
             </FormControl>
           </DialogContent>
           <DialogActions>
             <Button
               onClick={() => {
-                openDepositForm(false);
+                approveToken.write({
+                  args: [db3BridgeContractConfig.address, "10000000000"],
+                });
               }}
             >
-              Cancel
+              Approve
             </Button>
             <Button
               onClick={() => {
-                openDepositForm(false);
+                depositToBridge.write({
+                  args: [
+                    BigInt(parseFloat(depositValue) * 1000000000).toString(),
+                  ],
+                });
               }}
             >
-              Subscribe
+              Deposit
             </Button>
           </DialogActions>
         </Dialog>
