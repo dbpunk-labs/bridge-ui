@@ -9,8 +9,21 @@
   "devDependencies": {
     "@protobuf-ts/plugin": "^2.8.2",
     "@protobuf-ts/protoc": "^2.8.2",
+    "assert": "^2.0.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "eslint-config-prettier": "^8.8.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "postcss": "^8.4.22",
     "prettier": "^2.8.1",
-    "typescript": "latest"
+    "process": "^0.11.10",
+    "react-app-rewired": "^2.2.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "typescript": "latest",
+    "url": "^0.11.0"
   },
   "dependencies": {
     "@emotion/react": "latest",
@@ -24,6 +37,7 @@
     "@rainbow-me/rainbowkit": "^1.0.1",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "db3.js": "^0.2.28",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",
@@ -32,16 +46,18 @@
     "wagmi": "^1.0.9"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+      "chrome >= 67",
+      "edge >= 79",
+      "firefox >= 68",
+      "opera >= 54",
+      "safari >= 14"
     ],
     "development": [
       "last 1 chrome version",
